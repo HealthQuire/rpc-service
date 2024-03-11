@@ -21,11 +21,16 @@ async def resolve(method: str,
     pprint.pprint(params)
     pprint.pprint(json_data)
     pprint.pprint(headers)
-    function = print
     service = path.split("/")[1]
     endpoint = "/".join(path.split("/")[2:])
     if method == "POST":
         function = requests.post
+    elif method == "GET":
+        function = requests.get
+    elif method == "DELETE":
+        function = requests.delete
+    else:
+        function = requests.patch
     if service == "user":
         res = function(USER_SERVICE + endpoint, json=json_data)
     return res.json(), res.status_code
